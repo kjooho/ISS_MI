@@ -1,10 +1,10 @@
 library(mice)
 library(survival)
 library(mitools)
-source("C:\\Users\\user\\Desktop\\ISS MI\\supersampling.R")
-source("C:\\Users\\user\\Desktop\\ISS MI\\addph2var.R")
-source("C:\\Users\\user\\Desktop\\ISS MI\\smcfcs.cc.R")
-source("C:\\Users\\user\\Desktop\\ISS MI\\generate.data.R")
+source("R/supersampling.R")
+source("R/addph2var.R")
+source("R/smcfcs.cc.R")
+source("R/generate.data.R")
 
 ccdesign <- "case.cohort"  # "case.cohort" or "stratified.case.cohort"
 dat_list <- generate.data(0.99, design = ccdesign, interaction = F)
@@ -155,3 +155,4 @@ fits_smciss <- lapply(imp_dat, function(df) {
   fit
 })
 summary(MIcombine(fits_smciss))
+
