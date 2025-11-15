@@ -19,6 +19,6 @@ This directory contains R functions for implementing multiple imputation for sup
 - **generate.data.R**  
   R function for simulating full cohort datasets for demonstration.
 
-### **demo/**
+### **demo**
 - **casecohort_demo.R**  
   A demonstration script showing how to perform multiple imputation and Cox proportional hazards analysis in supersampled case-cohort studies using ISS.
