@@ -11,7 +11,7 @@ This directory contains R functions for implementing multiple imputation for sup
   R function for random supersampling (RSS) and influence function-based supersampling (ISS).
 
 - **addph2var.R**  
-  R function for phase-2 variance estimation in case-cohort studies, implementing Lin–Ying, Borgan II, and Samuelsen (2007) variance estimators.
+  R function for phase-2 variance estimation in case-cohort studies, implementing Lin-Ying, Borgan II, and Samuelsen (2007) variance estimators.
 
 - **smcfcs.cc.R**  
   A modified version of the substantive model compatible FCS algorithm from the `smcfcs` package (Bartlett et al., 2015), adapted for case-cohort and supersampled case-cohort designs.
