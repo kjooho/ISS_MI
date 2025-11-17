@@ -1,3 +1,7 @@
+# Modified source code of the R function smcfcs to accommodate 
+# supersampled case–cohort and standard case–cohort analyses.
+# Sections marked with "## modified" indicate the changes made.
+
 smcfcs.cc <- function (originaldata, smtype, smformula, predictorMatrix = NULL, method,
                        m = 5, numit = 10, rjlimit = 1000, noisy = FALSE, errorProneMatrix = NULL, in.subco, super) 
 {
@@ -1332,4 +1336,5 @@ catdraw <- function(prob) {
 
 expit <- function(x) {
   exp(x) / (1 + exp(x))
+
 }
