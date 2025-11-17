@@ -1,6 +1,6 @@
-######################################################################################
-#### Functions for super sampling and weight calibration ####
-####################################################################################
+##################################################################
+#              Function for Adding Phase 2 variance              #
+##################################################################
 
 add.ph2var <- function(fit, df, smformula, in.subco, cohort.size, stratum=NULL, cch.method, robust=NULL) {
   ind.fail <- as.character(as.formula(smformula)[[2]][[3]])
@@ -8,6 +8,8 @@ add.ph2var <- function(fit, df, smformula, in.subco, cohort.size, stratum=NULL, 
   cases <- which(df[[ind.fail]]==1)
   subco.noncase <- which(df[[in.subco]]==1 & df[[ind.fail]]==0)
   subco <- which(df[[in.subco]]==1)
+  # Variance formula for the case-cohort design (Lin & Ying, 1993),
+  # as presented in Therneau & Li (1999) and implemented in survival::cch function.
   if (cch.method == "LinYing"){
     wgt <- df$weights
     db <- as.matrix(resid(fit, type = "dfbeta"))
@@ -24,6 +26,8 @@ add.ph2var <- function(fit, df, smformula, in.subco, cohort.size, stratum=NULL, 
       fit$var <- fit$naive.var
     return(fit)
   }
+  # Variance formula for stratified case-cohort design (Borgan et al., 2000)
+  # as presented in survival::cch function.
   else if (cch.method == "II.Borgan"){
     stratum <- as.numeric(df[[stratum]])
     nstrata <- max(stratum)
@@ -60,6 +64,8 @@ add.ph2var <- function(fit, df, smformula, in.subco, cohort.size, stratum=NULL, 
     fit$var<-fit$naive.var
     return(fit)
   }
+  # Variance formula for the stratified case-cohort design (Borgan et al., 2000)
+  # Modified version of the Borgan II estimator (Samuelsen et al., 2007)
   else if (cch.method == "Samuelson2007"){
     wgt <- df$weights
     subco.cases <- split(subco.cases, df[[stratum]][subco.cases])
@@ -89,4 +95,5 @@ add.ph2var <- function(fit, df, smformula, in.subco, cohort.size, stratum=NULL, 
     fit$var <- fit$naive.var
     return(fit)
   }
+
 }
