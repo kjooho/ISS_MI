@@ -1,7 +1,34 @@
-######################################################################################
-#### Functions for super sampling and weight calibration ####
-####################################################################################
-# Require full cohort data for `data` argument
+##################################################################
+# supersampling()
+#
+# Purpose:
+#   Select a supersample and compute sampling weights for
+#   case–cohort and stratified case–cohort designs.
+#
+# Description:
+#   - random = TRUE:
+#       Performs random supersampling (RSS; Borgan et al., 2023) and
+#       updates subcohort indicators and design weights.
+#
+#   - random = FALSE:
+#       Performs influence-function–based supersampling (ISS) using dfbetas,
+#       selects units via the cube method, and applies calibration
+#       to reconcile supersampling with the original design.
+#
+# Inputs:
+#   data          : Full dataset.
+#   sub.smformula : Submodel formula for IF-based supersampling.
+#   in.subco      : Random subcohort indicator column.
+#   n.super       : Supersample size (scalar or per-stratum).
+#   random        : Logical; TRUE for RSS and FALSE for ISS.
+#   design        : "case.cohort" or "stratified.case.cohort".
+#   stratum       : Stratum variable (if applicable).
+#
+# Output:
+#   A list with:
+#     indices : Selected sample indices (supersample + case-cohort sample).
+#     weights : Final design weights after calibration.
+##################################################################
 
 supersampling <- function(data, sub.smformula, in.subco, n.super, random, design, stratum){
   if (missing(random)) {
@@ -202,4 +229,5 @@ supersampling <- function(data, sub.smformula, in.subco, n.super, random, design
     return(structure(list(indices = idx_full, weights = wgt * g),
                      class = "super.sampling"))
   }
+
 }
