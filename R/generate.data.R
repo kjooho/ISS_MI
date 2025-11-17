@@ -1,3 +1,7 @@
+##################################################################
+#              Functions to Generate Case-Cohort Data            #
+##################################################################
+# Simulation data: 4 low-cost covariates and 2 expensive biomarkers (one continuous, one binary)
 simul.data <- function(n, max.t = 15, Smax.t = 0.98, 
                        alpha = 1, relz1 = exp(1.5), relz2 = exp(0.5), relz3 = exp(0.1),
                        relxc = exp(0.1), relxb = exp(0.2),
@@ -97,6 +101,29 @@ simul.data <- function(n, max.t = 15, Smax.t = 0.98,
   return(DATA)
 }
 
+##################################################################
+# generate.data()
+#
+# Inputs:
+#   missing.frac : Proportion of units with missing expensive biomarkers.
+#   design       : Sampling design indicator (e.g., case-cohort, supersample, etc.).
+#   interaction  : Logical; if TRUE, include an interaction term (z1 × xc1).
+#
+# Details:
+#   - Calls simul.data() with fixed baseline parameters (n=25,000, follow-up=15).
+#   - Optionally includes an interaction effect through relz1.xc1.
+#   - Converts xb to a factor and imposes phase-2 missingness on xc, xb, and
+#     the interaction term.
+#   - Computes baseline cumulative hazard using a null Cox model to support
+#     SMC-FCS compatibility.
+#
+# Returns:
+#   A list with:
+#     dat     : Full simulated dataset (complete data).
+#     dat.mi  : Dataset with imposed missingness for MI.
+#     dat.smc : Dataset formatted for SMC-FCS imputation.
+#
+##################################################################
 generate.data <- function(missing.frac, design, interaction){
   if (!is.logical(interaction) || length(interaction) != 1) {
     stop("'interaction' must be a single logical value (TRUE or FALSE).")
@@ -145,4 +172,5 @@ generate.data <- function(missing.frac, design, interaction){
     dat.smc = dat.smc
   ))
 }
+
 
